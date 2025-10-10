@@ -1,27 +1,28 @@
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css';
 
-function Homepage() {
+function HomePage() {
     const navigate = useNavigate();
 
     return (
-        <div style={{ textAlign: 'center', marginTop: '100px' }}>
-            <h1>Welcome to the Office Queue System</h1>
-            <div style={{ marginTop: '50px' }}>
-                <button
-                    style={{ fontSize: '24px', padding: '20px 40px', margin: '20px' }}
-                    onClick={() => navigate('/customer')}
-                >
-                    Customer
-                </button>
-                <button
-                    style={{ fontSize: '24px', padding: '20px 40px', margin: '20px' }}
-                    onClick={() => navigate('/officer')}
-                >
-                    Officer
-                </button>
+        <div className="homepage-container">
+            <h1 className="homepage-title">Welcome to the Office Queue Management System</h1>
+            <div className="columns">
+                <div className="column customer">
+                    <p>If you're a customer, click the button below to choose a service and get a ticket</p>
+                    <button className="homepage-button" onClick={() => navigate('/customer')}>
+                        Customer
+                    </button>
+                </div>
+                <div className="column officer">
+                    <p>If you're an officer, click the button below to select your desk and see its informations</p>
+                    <button className="homepage-button" onClick={() => navigate('/officer')}>
+                        Officer
+                    </button>
+                </div>
             </div>
         </div>
     );
 }
 
-export default Homepage;
+export default HomePage;

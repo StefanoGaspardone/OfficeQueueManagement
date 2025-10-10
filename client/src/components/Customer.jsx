@@ -1,4 +1,4 @@
-function Customer() {
+function CustomerPage() {
     return <h2>Customer Page</h2>;
 }
-export default Customer;
+export default CustomerPage;
