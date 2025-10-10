@@ -15,7 +15,20 @@ app.use(cors({
 }));
 
 /* APIs */
+// GET TICKET
+app.post('/api/tickets', async (req, res) => {
 
+});
+
+// NEXT CUSTOMER
+app.post('/api/counters/:id/tickets', async (req, res) => {
+    
+});
+
+// GET COUNTER QUEUES
+app.get('/api/counters/:id/queues', async (req, res) => {
+
+});
 
 /* RUN THE SERVER */
 app.listen(port, () => console.log(`SERVER LISTENING ON http://localhost:${port}`))
