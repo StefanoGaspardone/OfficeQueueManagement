@@ -1,0 +1,48 @@
+.homepage-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.homepage-title {
+    margin-bottom: 100px;
+}
+
+.columns {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    width: 80%;
+}
+
+.column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.homepage-button {
+    font-size: 24px;
+    padding: 20px 40px;
+    cursor: pointer;
+    border: none;
+    border-radius: 12px;
+    background-color: #FFCC00;
+    box-shadow: 5px 5px 15px #b8b8b8,
+        -5px -5px 15px #ffffff;
+    transition: all 0.2s ease-in-out;
+}
+
+.homepage-button:hover {
+    box-shadow: inset 5px 5px 15px #d4aa00,
+        inset -5px -5px 15px #ffe066;
+}
+
+.column p {
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
