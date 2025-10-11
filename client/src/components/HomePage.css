@@ -46,3 +46,21 @@
     font-weight: 500;
     margin-bottom: 20px;
 }
+
+/* API docs button in the top-right */
+.api-docs-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 8px 12px;
+    border-radius: 6px;
+    background-color: #0b5fff;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.api-docs-button:hover {
+    opacity: 0.9;
+}

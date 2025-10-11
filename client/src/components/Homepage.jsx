@@ -6,6 +6,7 @@ function HomePage() {
 
     return (
         <div className="homepage-container">
+            <button className="api-docs-button" onClick={() => window.open('http://localhost:8080/api-docs', '_blank')}>API Docs</button>
             <h1 className="homepage-title">Welcome to the Office Queue Management System</h1>
             <div className="columns">
                 <div className="column customer">

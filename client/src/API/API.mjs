@@ -14,19 +14,20 @@ const getServices = async () => {
     }
 };
 
-const getTicket = async (serviceType) => {
+const getTicket = async (serviceId) => {
     try {
         const response = await fetch(`${SERVER_URL}/api/tickets`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({ serviceType }),
+            body: JSON.stringify({ serviceId }),
         });
         if (!response.ok) {
             throw new Error('Network response was not ok');
         }
         const data = await response.json();
+        // server now returns { ticketId, serviceId, serviceType }
         console.log('Ticket created with ID:', data.ticketId);
         return data.ticketId;
     } catch (error) {

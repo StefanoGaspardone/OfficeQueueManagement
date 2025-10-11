@@ -17,17 +17,23 @@ export const getServices = () => {
   });
 };
 
-export const createTicket = (serviceType) => {
-    return new Promise((resolve, reject) => {
-        const stmt = db.prepare("INSERT INTO tickets (service, date, issuetime, status) VALUES (?, DATE('now'), TIME('now'), 'waiting')");
-        stmt.run(serviceType, function(err) {
-            if (err) {
-                reject(err);
-            } else {
-                resolve({ ticketId: this.lastID });
-            }
-        });
-        stmt.finalize();
+export const createTicket = (serviceId) => {
+  return new Promise((resolve, reject) => {
+    // Validate that the serviceId exists and retrieve its type (optional)
+    db.get("SELECT id, type FROM services WHERE id = ?", [serviceId], (err, row) => {
+      if (err) return reject(err);
+      if (!row) return reject(new Error('Service not found'));
+
+      const stmt = db.prepare("INSERT INTO tickets (service, date, issuetime, status) VALUES (?, DATE('now'), TIME('now'), 'waiting')");
+      stmt.run(serviceId, function (err) {
+        if (err) {
+          reject(err);
+        } else {
+          resolve({ ticketId: this.lastID, serviceId: row.id, serviceType: row.type });
+        }
+      });
+      stmt.finalize();
     });
-}
+  });
+};
 
