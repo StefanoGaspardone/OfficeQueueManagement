@@ -15,7 +15,10 @@ app.use(cors({
 }));
 
 /* APIs */
-
+app.get('/api/ticket', (req, res) => {
+    res.json({ ticket: Math.floor(Math.random() * 1000) });
+    
+});
 
 /* RUN THE SERVER */
 app.listen(port, () => console.log(`SERVER LISTENING ON http://localhost:${port}`))
