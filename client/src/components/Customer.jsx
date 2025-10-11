@@ -1,77 +1,58 @@
-import { useState } from 'react';
+import { useEffect, useState } from "react";
+import API from "../API/API.mjs";
+import './Customer.css';
 
 function CustomerPage() {
-    // Example services array — its length can change over time
-    const [services] = useState([
-        'General Inquiry',
-        'Payments',
-        'Technical Support',
-        'Appointments',
-        'Returns',
-        'Info Desk',
-        'Complaints',
-        'Other'
-    ]);
+  const [services, setServices] = useState([]); // array containing objects of type {id: integer, type: string} (null if no services available)
+  const [selectedService, setSelectedService] = useState(null); // id of the selected service (null if no service is selected yet)
+  const [ticketId, setTicketId] = useState(null); // id of the requested ticket (null if no ticket has been requested yet) 
 
-    const [selectedService, setSelectedService] = useState(null);
+  useEffect(() => {
+    API.getServices().then((data) => {
+      setServices(Array.isArray(data) ? data : []);
+    });
+  }, []);
 
-    return (
-        <div style={{ padding: 16 }}>
-            <h2>Customer Page</h2>
+  return (
+    <div className="customer-container">
+      <h2>Customer Page</h2>
 
-            <p>Please select a service:</p>
+      {ticketId !== null && (
+        <div className="ticket-card">Your ticket ID is: {ticketId}</div>
+      )}
 
-            <div
-                role="list"
-                style={{
-                    display: 'grid',
-                    gridTemplateColumns: 'repeat(4, 1fr)',
-                    gap: 8,
-                    marginBottom: 16,
-                }}
-            >
-                {services.map((service, idx) => (
-                    <button
-                        key={idx}
-                        type="button"
-                        onClick={() => setSelectedService(service)}
-                        aria-pressed={selectedService === service}
-                        style={{
-                            padding: 12,
-                            borderRadius: 6,
-                            border: selectedService === service ? '2px solid #0b5fff' : '1px solid #ccc',
-                            backgroundColor: selectedService === service ? '#e6f0ff' : '#fff',
-                            cursor: 'pointer',
-                            textAlign: 'center',
-                        }}
-                    >
-                        {service}
-                    </button>
-                ))}
-            </div>
+      <p>Please select a service:</p>
 
-            <div>
-                <button
-                    type="button"
-                    disabled={!selectedService}
-                    onClick={() => {
-                        // Placeholder action — replace with real API call
-                        alert(`Ticket requested for: ${selectedService}`);
-                    }}
-                    style={{
-                        padding: '10px 16px',
-                        backgroundColor: selectedService ? '#0b5fff' : '#cfcfcf',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: 6,
-                        cursor: selectedService ? 'pointer' : 'not-allowed',
-                    }}
-                >
-                    Get Ticket
-                </button>
-            </div>
-        </div>
-    );
+      <div role="list" className="services-grid">
+        {services.map((service) => (
+          <button
+            key={service.id}
+            type="button"
+            onClick={() => setSelectedService(service.id)}
+            aria-pressed={selectedService === service.id}
+            className={`service-button ${selectedService === service.id ? 'selected' : ''}`}
+          >
+            {service.type}
+          </button>
+        ))}
+      </div>
+
+      <div className="get-ticket-row">
+        <button
+          type="button"
+          className="get-ticket-button"
+          disabled={!selectedService}
+          onClick={() => {
+            API.getTicket(selectedService).then((ticketId) => {
+              setTicketId(ticketId);
+            });
+          }}
+        >
+          Get Ticket
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default CustomerPage;

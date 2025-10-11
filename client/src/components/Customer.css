@@ -1,0 +1,71 @@
+/* Container */
+.customer-container {
+  padding: 16px;
+  position: relative;
+}
+
+/* Ticket banner */
+.ticket-banner {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background-color: #0b5fff;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+}
+
+.ticket-card {
+  margin-bottom: 16px;
+  padding: 16px;
+  border: 2px solid #4caf50;
+  border-radius: 6px;
+  background-color: #e8f5e9;
+  color: #2e7d32;
+  font-weight: bold;
+  font-size: 18px;
+  text-align: center;
+}
+
+/* Services grid */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.service-button {
+  padding: 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  text-align: center;
+}
+
+.service-button.selected {
+  border: 2px solid #0b5fff;
+  background-color: #e6f0ff;
+}
+
+.get-ticket-row {
+  display: flex;
+  justify-content: center;
+}
+
+.get-ticket-button {
+  padding: 10px 16px;
+  background-color: #0b5fff;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.get-ticket-button:disabled {
+  background-color: #cfcfcf;
+  cursor: not-allowed;
+}
