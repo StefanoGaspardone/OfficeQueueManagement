@@ -30,15 +30,15 @@
 
 .next-customer-button {
     position: fixed;
-    bottom: 24px;
-    right: 24px;
-    padding: 16px 24px;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    padding: 1rem 1.5rem;
     background-color: #0b5fff;
     color: #fff;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 16px;
+    font-size: 1rem;
     font-weight: 600;
     z-index: 1000;
 }
