@@ -70,6 +70,97 @@
         }
       }
     }
+  ,
+    "/api/counters": {
+      "get": {
+        "summary": "Get list of counters",
+        "responses": {
+          "200": {
+            "description": "Array of counter ids",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "counters": {
+                      "type": "array",
+                      "items": { "type": "integer" }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/counters/{id}/tickets": {
+      "post": {
+        "summary": "Serve next customer at counter",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "Ticket assigned to counter",
+            "content": {
+              "application/json": {
+                "schema": { "type": "object", "properties": { "ticketId": { "type": "integer", "nullable": true } } }
+              }
+            }
+          },
+          "404": { "description": "Counter not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    },
+    "/api/counters/{id}/queues": {
+      "get": {
+        "summary": "Get queues for each service this counter handles",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Queues per service type",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "queues": {
+                      "type": "object",
+                      "additionalProperties": {
+                        "type": "array",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "id": { "type": "integer" },
+                            "issuetime": { "type": "string" }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": { "description": "Counter not found" },
+          "500": { "description": "Internal server error" }
+        }
+      }
+    }
   },
   "components": {
     "schemas": {

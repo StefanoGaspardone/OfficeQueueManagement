@@ -67,7 +67,7 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
         }
 
         ticketId = await getNextCustomer(counterId);
-        console.log(ticketId);
+        console.log(ticketId); // will print null if no ticket is waiting for the services of this counter
         await setTicketServed(counterId, ticketId);
 
         io.emit('ticketServed', { counterId, ticketId }); // manda una notifica a tutti i client connessi

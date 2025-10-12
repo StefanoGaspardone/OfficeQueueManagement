@@ -20,7 +20,7 @@ export const getServices = () => {
 
 export const createTicket = (serviceId) => {
   return new Promise((resolve, reject) => {
-    // Validate that the serviceId exists and retrieve its type (optional)
+    // Validate that the serviceId exists 
     db.get("SELECT id, type FROM services WHERE id = ?", [serviceId], (err, row) => {
       if (err) return reject(err);
       if (!row) return reject(new Error('Service not found'));
