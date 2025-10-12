@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { getServices, createTicket, getCounter, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer } from './db/dao.mjs';
+import { getServices, createTicket, getCounter, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType} from './db/dao.mjs';
 
 /* INIT */
 const app = express();
@@ -66,7 +66,25 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
 
 // GET COUNTER QUEUES
 app.get('/api/counters/:id/queues', async (req, res) => {
+    try {
+        const { counterId } = req.params;
+        const counter = await getCounter(counterId);
+        if(!counter) return res.status(404).json({ message: `Counter ${counterId} does not exist` });
+        // if(!counter.available) return res.status(422).json({ message: `Counter ${counterId} is currently unavailable` }); if we want the the admin can set a counter unavailable
 
+        let counterServices = await getCounterServices(counterId);
+        let result = {};
+        for(const service of counterServices) {
+            const serviceQueue = await getServiceQueue(service);
+            const serviceType = await getServiceType(service);
+            result[serviceType] = serviceQueue;
+        }
+            //result will be a JSON object with keys the service types and values arrays of ticket ids
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({ message: error.message });
+    }
 });
 
 // GET SERVICES

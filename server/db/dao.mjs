@@ -145,3 +145,33 @@ export const setTicketServed = (counterId, ticketId) => {
         });
     });
 }
+
+export const getCounterServices = (counterId) => {
+    return new Promise((resolve, reject) => {
+        const query = `SELECT service FROM CounterServices WHERE counter = ?`;
+        db.all(query, [counterId], (err, rows) => {
+            if(err) reject(err);
+            else resolve(rows.map(row => row.service));
+        });
+    });
+}
+
+export const getServiceQueue = (serviceId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT id FROM Tickets WHERE service = ? AND status = "waiting" ORDER BY issuetime ASC';
+        db.all(query, [serviceId], (err, rows) => {
+            if(err) reject(err);
+            else resolve(rows.map(row => row.id));
+        });
+    });
+}
+
+export const getServiceType = (serviceId) => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT type FROM Services WHERE id = ?';
+        db.get(query, [serviceId], (err, row) => {
+            if(err) reject(err);
+            else resolve(row.type);
+        });
+    });
+}
