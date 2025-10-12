@@ -7,10 +7,21 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 
 import { getServices, createTicket, getCounter, getCounters, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType} from './db/dao.mjs';
+import http from "http";
+import {Server} from "socket.io";
 
 /* INIT */
 const app = express();
 const port = 8080;
+const server = http.createServer(app);
+const io = new Server(server, { cors: { origin: "*" } });
+
+/* SOCKET.IO */
+// gestisce connessione e disconnessione di un client
+io.on("connection", (socket) => {
+    console.log("Nuovo client connesso:", socket.id);
+    socket.on("disconnect", () => {console.log("Client disconnesso:", socket.id)});
+});
 
 /* MIDDLEWARES */
 app.use(express.json());
@@ -59,6 +70,7 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
         console.log(ticketId);
         await setTicketServed(counterId, ticketId);
 
+        io.emit('ticketServed', { counterId, ticketId }); // manda una notifica a tutti i client connessi
         return res.status(201).json({ ticketId });
     } catch(error) {
         console.log(error);
@@ -127,7 +139,7 @@ try {
 
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.get('/swagger.json', (req, res) => res.json(swaggerSpec));
-        
+
 
 /* RUN THE SERVER */
 app.listen(port, () => console.log(`SERVER LISTENING ON http://localhost:${port}`))
