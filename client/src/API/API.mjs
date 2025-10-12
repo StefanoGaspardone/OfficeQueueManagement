@@ -36,6 +36,45 @@ const getTicket = async (serviceId) => {
     }
 };
 
+const getCounters = async () => {
+    try {
+        const response = await fetch(`${SERVER_URL}/api/counters`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.counters;   
+    } catch (error) {
+        console.error('Error fetching counters:', error);
+        return [];
+    }
+};
 
-const API = { getServices, getTicket };
+const getCounterQueues = async (counterId) => {
+    try {
+        const response = await fetch(`${SERVER_URL}/api/counters/${counterId}/queues`);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return data.queues;   
+    } catch (error) {
+        console.error('Error fetching queues:', error);
+        return [];
+    }
+}
+
+const nextCustomer = async (counterId) => {
+    const response = await  fetch(`${SERVER_URL}/api/counters/${counterId}/tickets`, {
+        method: 'POST'
+    });
+    
+    if(!response.ok) throw new Error('Network response was not ok');
+
+    const data = await response.json();
+    console.log('Ticket called with ID:', data.ticketId);
+    return data.ticketId;
+}
+
+const API = { getServices, getTicket, getCounters, getCounterQueues, nextCustomer };
 export default API;

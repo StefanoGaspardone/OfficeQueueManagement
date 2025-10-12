@@ -42,19 +42,21 @@ app.post('/api/tickets', async (req, res) => {
 // NEXT CUSTOMER
 app.post('/api/counters/:id/tickets', async (req, res) => {
     try {
-        const { counterId } = req.params;
+        const counterId = req.params.id;
 
         const counter = await getCounter(counterId);
         if(!counter) return res.status(404).json({ message: `Counter ${counterId} does not exist` });
         // if(!counter.available) return res.status(422).json({ message: `Counter ${counterId} is currently unavailable` }); if we want the the admin can set a counter unavailable
 
         let ticketId = await getTicketServedByCounter(counterId);
+        console.log(ticketId);
         if(ticketId) {
             const { serviceId, serviceTime } = await setTicketFinished(counterId, ticketId);
             await updateServiceTime(serviceId, serviceTime);
         }
 
         ticketId = await getNextCustomer(counterId);
+        console.log(ticketId);
         await setTicketServed(counterId, ticketId);
 
         return res.status(201).json({ ticketId });
@@ -67,7 +69,8 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
 // GET COUNTER QUEUES
 app.get('/api/counters/:id/queues', async (req, res) => {
     try {
-        const { counterId } = req.params;
+        const counterId = req.params.id;
+
         const counter = await getCounter(counterId);
         if(!counter) return res.status(404).json({ message: `Counter ${counterId} does not exist` });
         // if(!counter.available) return res.status(422).json({ message: `Counter ${counterId} is currently unavailable` }); if we want the the admin can set a counter unavailable
@@ -80,7 +83,7 @@ app.get('/api/counters/:id/queues', async (req, res) => {
             result[serviceType] = serviceQueue;
         }
             //result will be a JSON object with keys the service types and values arrays of ticket ids
-        res.status(200).json(result);
+        res.status(200).json({ queues: result });
     } catch (error) {
         console.log(error);
         return res.status(500).json({ message: error.message });

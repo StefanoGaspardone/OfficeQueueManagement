@@ -63,7 +63,7 @@ export const getTicketServedByCounter = (id) => {
         const query = 'SELECT id FROM Tickets WHERE counter = ? AND status = "processing"';
         db.get(query, [id], (err, row) => {
             if(err) reject(err);
-            else resolve(row.id);
+            else resolve(row ? row.id : null);
         });
     });
 }
@@ -122,18 +122,18 @@ export const getNextCustomer = (counterId) => {
             WITH ServiceQueues AS (
                 SELECT t.service, s.servicetime, COUNT(*) as queue_length
                 FROM Tickets t, Services s, CounterServices cs
-                WHERE cs.counter = ?  AND t.status = 0 AND t.service = s.id AND t.service = cs.service
+                WHERE cs.counter = ? AND t.status = "waiting" AND t.service = s.id AND t.service = cs.service
                 GROUP BY t.service, s.servicetime
             ),
             SelectedService AS (
                 SELECT service
                 FROM ServiceQueues
-                ORDER BY  queue_length DESC, servicetime ASC, service ASC
+                ORDER BY queue_length DESC, servicetime ASC, service ASC
                 LIMIT 1
             )
-            SELECT  t.id
+            SELECT t.id
             FROM Tickets t, SelectedService ss
-            WHERE t.status = 0 AND t.service = ss.service
+            WHERE t.status = "waiting" AND t.service = ss.service
             ORDER BY t.issuetime ASC
             LIMIT 1
         `;
@@ -168,10 +168,10 @@ export const getCounterServices = (counterId) => {
 
 export const getServiceQueue = (serviceId) => {
     return new Promise((resolve, reject) => {
-        const query = 'SELECT id FROM Tickets WHERE service = ? AND status = "waiting" ORDER BY issuetime ASC';
+        const query = 'SELECT id, issuetime FROM Tickets WHERE service = ? AND status = "waiting" ORDER BY issuetime ASC';
         db.all(query, [serviceId], (err, rows) => {
             if(err) reject(err);
-            else resolve(rows.map(row => row.id));
+            else resolve(rows);
         });
     });
 }

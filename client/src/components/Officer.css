@@ -1,0 +1,44 @@
+.tickets-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.75rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.ticket-card {
+    background: #ffffff;
+    border: 2px solid #3b83f694;
+    border-radius: 8px;
+    padding: 0.75rem;
+    text-align: center;
+    cursor: pointer;
+}
+
+.ticket-id {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #000;
+    margin-bottom: 0.25rem;
+}
+
+.ticket-time {
+    font-size: 0.875rem;
+    color: #2b2b2b;
+    font-weight: 400;
+}
+
+.next-customer-button {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    padding: 16px 24px;
+    background-color: #0b5fff;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    z-index: 1000;
+}
