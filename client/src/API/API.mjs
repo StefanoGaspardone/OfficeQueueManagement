@@ -76,5 +76,19 @@ const nextCustomer = async (counterId) => {
     return data.ticketId;
 }
 
-const API = { getServices, getTicket, getCounters, getCounterQueues, nextCustomer };
+const getWaitingTickets = async () => {
+    try {
+        const response = await fetch(`${SERVER_URL}/api/tickets`);
+        if (!response.ok) {
+            throw new Error('There was a problem fetching waiting tickets');
+        }
+        const data = await response.json();
+        return data.queue;
+    } catch (error) {
+        console.error('Error fetching waiting tickets:', error);
+        return [];
+    }
+}
+
+const API = { getServices, getTicket, getCounters, getCounterQueues, nextCustomer, getWaitingTickets };
 export default API;

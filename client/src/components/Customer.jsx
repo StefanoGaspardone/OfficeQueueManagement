@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import API from "../API/API.mjs";
 import './Customer.css';
+import InfoDisplay from "./InfoDisplay";
 
 function CustomerPage() {
   const [services, setServices] = useState([]); // array containing objects of type {id: integer, type: string} (null if no services available)
@@ -20,7 +21,7 @@ function CustomerPage() {
       {ticketId !== null && (
         <div className="ticket-card">Your ticket ID is: {ticketId}</div>
       )}
-
+      <InfoDisplay ticketId={ticketId}/>
       <p>Please select a service:</p>
 
       <div role="list" className="services-grid">

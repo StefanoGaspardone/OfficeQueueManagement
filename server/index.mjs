@@ -1,12 +1,12 @@
 import express from 'express';
 import morgan from 'morgan';
 import cors from 'cors';
-import swaggerUi from 'swagger-ui-express';
+import swaggerUi, {serve} from 'swagger-ui-express';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { getServices, createTicket, getCounter, getCounters, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType} from './db/dao.mjs';
+import { getServices, createTicket, getCounter, getCounters, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType, getWaitingTickets} from './db/dao.mjs';
 import http from "http";
 import {Server} from "socket.io";
 
@@ -124,6 +124,17 @@ app.get('/api/counters', async (req, res) => {
     }
 });
 
+//GET WAITING TICKETS
+app.get('/api/tickets/', async (req, res) => {
+    try {
+        const queue = await getWaitingTickets();
+        res.status(200).json({ queue });
+    } catch (error) {
+        console.error('Error fetching waiting tickets:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
 // Serve swagger.json and Swagger UI
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -142,4 +153,4 @@ app.get('/swagger.json', (req, res) => res.json(swaggerSpec));
 
 
 /* RUN THE SERVER */
-app.listen(port, () => console.log(`SERVER LISTENING ON http://localhost:${port}`))
+server.listen(port, () => console.log(`SERVER LISTENING ON http://localhost:${port}`))

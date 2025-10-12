@@ -185,3 +185,14 @@ export const getServiceType = (serviceId) => {
         });
     });
 }
+
+export const getWaitingTickets = () => {
+    return new Promise((resolve, reject) => {
+        //ritorna solo i bigletti in stato "waiting" emessi oggi, ordinati per orario di emissione
+        const query = 'SELECT id FROM Tickets WHERE status = "waiting" AND date=DATE("now") ORDER BY issuetime ASC';
+        db.all(query, [], (err, rows) => {
+            if(err) reject(err);
+            else resolve(rows.map(row => row.id));
+        });
+    })
+}
