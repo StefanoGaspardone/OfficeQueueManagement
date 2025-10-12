@@ -6,7 +6,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 
-import { getServices, createTicket, getCounter, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType} from './db/dao.mjs';
+import { getServices, createTicket, getCounter, getCounters, getCounterServices, getTicketServedByCounter, setTicketFinished, updateServiceTime, setTicketServed, getNextCustomer, getServiceQueue, getServiceType} from './db/dao.mjs';
 
 /* INIT */
 const app = express();
@@ -94,6 +94,17 @@ app.get('/api/services', async (req, res) => {
         res.status(200).json({ services });
     } catch (error) {
         console.error('Error fetching services:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+//GET COUNTERS
+app.get('/api/counters', async (req, res) => {
+    try {
+        const counters = await getCounters();
+        res.status(200).json({ counters });
+    } catch (error) {
+        console.error('Error fetching counters:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });

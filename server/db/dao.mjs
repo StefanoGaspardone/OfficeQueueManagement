@@ -48,6 +48,16 @@ export const getCounter = (id) => {
     });
 }
 
+export const getCounters = () => {
+    return new Promise((resolve, reject) => {
+        const query = 'SELECT DISTINCT counter FROM CounterServices';
+        db.all(query, [], (err, rows) => {
+            if (err) reject(err);
+            else resolve(rows.map(row => row.counter));
+        });
+    });
+}
+
 export const getTicketServedByCounter = (id) => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT id FROM Tickets WHERE counter = ? AND status = "processing"';
