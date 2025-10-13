@@ -1,0 +1,70 @@
+/* Container for the entire info display */
+.info-display-container {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+}
+
+/* General heading style */
+.info-display-container h2,
+.info-display-container h3 {
+    color: #333;
+    margin-bottom: 12px;
+}
+
+/* Called ticket message */
+.called-ticket-message {
+    padding: 12px;
+    background-color: #4caf50; /* Green background */
+    color: white;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 1.2em;
+    margin-bottom: 16px;
+}
+
+/* Last served ticket info */
+.last-served-info {
+    font-style: italic;
+    color: #555;
+    margin-bottom: 16px;
+}
+
+/* Counters section */
+.counters-section {
+    margin-bottom: 16px;
+}
+
+.counters-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 12px;
+}
+
+.counter-info-box {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+.counter-info-box p {
+    margin: 0;
+    font-weight: 500;
+}
+
+/* Waiting tickets section */
+.waiting-tickets-section h3 {
+    margin-bottom: 8px;
+}
+
+.waiting-tickets-list {
+    padding: 12px;
+    background-color: #e6f0ff; /* Light blue background */
+    border: 1px solid #0b5fff;
+    border-radius: 6px;
+    color: #333;
+    word-wrap: break-word; /* Wrap long list of tickets */
+}
