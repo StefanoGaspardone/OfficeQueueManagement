@@ -40,6 +40,7 @@ app.post('/api/tickets', async (req, res) => {
             return res.status(400).json({ error: 'serviceId (integer) is required in request body' });
         }
         const result = await createTicket(serviceId);
+        io.emit("newTicket", result);
         res.status(201).json(result);
     } catch (error) {
         console.error('Error creating ticket:', error);
@@ -70,7 +71,7 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
         console.log(ticketId); // will print null if no ticket is waiting for the services of this counter
         await setTicketServed(counterId, ticketId);
 
-        io.emit('ticketServed', { counterId, ticketId }); // manda una notifica a tutti i client connessi
+        io.emit('ticketServed', { "counterId":Number(counterId), ticketId }); // manda una notifica a tutti i client connessi
         return res.status(201).json({ ticketId });
     } catch(error) {
         console.log(error);

@@ -12,12 +12,18 @@ export default function InfoDisplay({ticketId}) {
     const [counterCalledBy, setCounterCalledBy] = useState(null);
     const waitingTicketsRef = useRef(waitingTickets);
     const ticketIdRef = useRef(ticketId);
+    const countersRef = useRef(counters);
 
     // Recupera i counters e i ticket in attesa quando il componente viene montato
     useEffect(() => {
         API.getCounters().then((counterIds) => {
-
-            setCounters(Array.isArray(counterIds) ? counterIds : []);
+            let res;
+            if (Array.isArray(counterIds)) {
+                res = counterIds.map((counterId) => {return {"counterId":counterId, "lastTicketCalled": null}});
+            }else {
+                res = [];
+            }
+            setCounters(res);
         });
         API.getWaitingTickets().then((data) => {
             if (!data.includes(ticketId)){
@@ -33,6 +39,9 @@ export default function InfoDisplay({ticketId}) {
     useEffect(() => {
         ticketIdRef.current = ticketId;
     }, [ticketId]);
+    useEffect(() => {
+        countersRef.current = counters;
+    }, []);
 
     useEffect(() => {
         // Inizializza il socket
@@ -45,16 +54,28 @@ export default function InfoDisplay({ticketId}) {
                 console.log("Error: a ticket not in the queue has been called, ticket called is:", data.ticketId, "the queue is:", waitingTickets);
             }else {
                 setWaitingTickets((prevTickets) => prevTickets.filter((id) => id !== data.ticketId));
+                setCounters((prevCounters) => prevCounters.map((counter) => {
+                    if(counter.counterId === data.counterId){
+                        return {...counter, lastTicketCalled: data.ticketId};
+                    }else {
+                        return counter;
+                    }
+                }));
             }
             setServedTicket(data);
-            console.log(data);
-            console.log(ticketIdRef.current);
             if(data.ticketId === ticketIdRef.current){
                 setCalled(true);
                 setCounterCalledBy(data.counterId);
             }
         });
 
+        newSocket.on("newTicket", (data) => {
+            if(waitingTicketsRef.current.includes(data.ticketId)){
+                console.log("Error: a ticket has been created but was already in the queue, ticket created is:", data.ticketId, "the queue is:", waitingTickets);
+            }else {
+                setWaitingTickets((prevTickets) => [...prevTickets, data.ticketId]);
+            }
+        })
         // Cleanup quando il componente viene smontato
         return () => {
             newSocket.off("ticketServed");
@@ -73,8 +94,8 @@ export default function InfoDisplay({ticketId}) {
                 : <></>}
             <h3>Active counters today:</h3>
             {counters.map((counter) => (
-            <div key={counter} className="counter-info">
-                <p>Counter {counter}</p>
+            <div key={counter.counterId} className="counter-info">
+                <p>Counter {counter.counterId} - {counter.lastTicketCalled ? "is serving "+counter.lastTicketCalled: ""}</p>
             </div>
             ))}
             <h3>Waiting Tickets:</h3>
