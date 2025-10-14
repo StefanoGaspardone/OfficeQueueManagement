@@ -78,16 +78,21 @@ export const setTicketFinished = (counterId, ticketId) => {
             else {
                 const query = 'SELECT service, calledtime, finishedtime, date FROM Tickets WHERE id = ?';
                 db.get(query, [ticketId], (err, row) => {
-                    if(err) reject(err);
-                    else {
-                        const calledDateTime = dayjs(`${row.date} ${row.calledtime}`);
-                        const finishedDateTime = dayjs(`${row.date} ${row.finishedtime}`);
-                        const serviceTimeSeconds = finishedDateTime.diff(calledDateTime, 'second');
-                        
-                        resolve({
-                            serviceId: row.service,
-                            serviceTime: serviceTimeSeconds
-                        });
+                    if (err) {
+                        reject(err);
+                    } else if (!row) {
+                        // ticket not found after update — return safe default
+                        resolve({ serviceId: null, serviceTime: 0 });
+                    } else {
+                        // defensive: if date/calledtime/finishedtime are missing, return 0 as service time
+                        if (!row.date || !row.calledtime || !row.finishedtime) {
+                            resolve({ serviceId: row.service || null, serviceTime: 0 });
+                        } else {
+                            const calledDateTime = dayjs(`${row.date} ${row.calledtime}`);
+                            const finishedDateTime = dayjs(`${row.date} ${row.finishedtime}`);
+                            const serviceTimeSeconds = finishedDateTime.diff(calledDateTime, 'second');
+                            resolve({ serviceId: row.service, serviceTime: serviceTimeSeconds });
+                        }
                     }
                 });
             }
@@ -180,7 +185,8 @@ export const getServiceType = (serviceId) => {
     return new Promise((resolve, reject) => {
         const query = 'SELECT type FROM Services WHERE id = ?';
         db.get(query, [serviceId], (err, row) => {
-            if(err) reject(err);
+            if (err) reject(err);
+            else if (!row) resolve(null);
             else resolve(row.type);
         });
     });
