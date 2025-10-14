@@ -79,18 +79,16 @@ export default function InfoDisplay({ ticketId }) {
         setCalled(true);
         setCounterCalledBy(data.counterId);
       } else {
-        const toUse = false;
         setCounters((prevCounters) =>
           prevCounters.map((counter) => {
             if (counter.counterId === data.counterId) {
-                if(counterCalledBy === counter.counterId && counter.lastTicketCalled !== data.ticketId)
-                return { ...counter, lastTicketCalled: data.ticketId };
+              return { ...counter, lastTicketCalled: data.ticketId };
             } else {
               return counter;
             }
           })
         );
-        if (called === true && data.ticketId) setCalled(false);
+        setCalled(false);
       }
     });
 
