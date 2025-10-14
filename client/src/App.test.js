@@ -1,8 +1,11 @@
+/* TEST-TYPE: Integration
+   RATIONALE: Renders `App` with routes to ensure top-level composition renders the homepage title.
+*/
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('renders homepage title', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const title = screen.getByText(/Welcome to the Office Queue Management System/i);
+  expect(title).toBeInTheDocument();
 });
