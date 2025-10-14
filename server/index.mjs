@@ -61,7 +61,6 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
         // if(!counter.available) return res.status(422).json({ message: `Counter ${counterId} is currently unavailable` }); if we want the the admin can set a counter unavailable
 
         let ticketId = await getTicketServedByCounter(counterId);
-        console.log(ticketId);
         if(ticketId) {
             const { serviceId, serviceTime } = await setTicketFinished(counterId, ticketId);
             await updateServiceTime(serviceId, serviceTime);
@@ -72,6 +71,7 @@ app.post('/api/counters/:id/tickets', async (req, res) => {
         await setTicketServed(counterId, ticketId);
 
         io.emit('ticketServed', { "counterId":Number(counterId), ticketId }); // manda una notifica a tutti i client connessi
+        console.log("INVIO :", { "counterId":Number(counterId), ticketId });
         return res.status(201).json({ ticketId });
     } catch(error) {
         console.log(error);

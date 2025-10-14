@@ -11,6 +11,7 @@ export default function InfoDisplay({ ticketId }) {
   const [called, setCalled] = useState(false);
   const [counterCalledBy, setCounterCalledBy] = useState(null);
   const waitingTicketsRef = useRef(waitingTickets);
+  const counterCalledByRef = useRef(counterCalledBy);
   const ticketIdRef = useRef(ticketId);
   const countersRef = useRef(counters);
 
@@ -45,6 +46,9 @@ export default function InfoDisplay({ ticketId }) {
   useEffect(() => {
     countersRef.current = counters;
   }, [counters]);
+  useEffect(() => {
+    counterCalledByRef.current = counterCalledBy;
+  }, [counterCalledBy]);
 
   useEffect(() => {
     // Initialize socket
@@ -74,8 +78,11 @@ export default function InfoDisplay({ ticketId }) {
           })
         );
       }
+      console.log("received : " + JSON.stringify(data));
+      console.log("ticketIdRef.current = " + ticketIdRef.current);
+      console.log("counterCalledBy = " + JSON.stringify(counterCalledByRef));
       setServedTicket(data);
-      if (data.ticketId === ticketIdRef.current) {
+      if (data.ticketId === ticketIdRef.current && data.ticketId !== null && ticketIdRef.current !== null) {
         setCalled(true);
         setCounterCalledBy(data.counterId);
       } else {
@@ -88,7 +95,9 @@ export default function InfoDisplay({ ticketId }) {
             }
           })
         );
-        setCalled(false);
+        if(counterCalledByRef.current === data.counterId && data.counterId !== null ){
+            setCalled(false);
+        }
       }
     });
 
