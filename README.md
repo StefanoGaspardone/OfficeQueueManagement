@@ -104,4 +104,4 @@ The system provides comprehensive statistics for management:
 
 ---
 
-**Version**: 2.2.0 2022-09-30
+**Version**: 2.2.0 2025-10-15
