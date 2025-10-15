@@ -89,11 +89,11 @@ export default function InfoDisplay({ ticketId }) {
         <div className="info-display-container">
             {called && (
                 <div className="called-ticket-message">
-                    <h2>Your ticket {ticketId} is being served at counter {counterCalledBy}</h2>
+                    <h2>Your ticket {ticketId} is being served at Counter {counterCalledBy}</h2>
                 </div>
             )}
             {servedTicket && (
-                <p className="last-served-info">Last ticket served: {servedTicket.ticketId} by counter {servedTicket.counterId}</p>
+                <p className="last-served-info">Last ticket served: {servedTicket.ticketId} by Counter {servedTicket.counterId}</p>
             )}
             <div className="counters-section">
                 <h3>Active Counters Today:</h3>
