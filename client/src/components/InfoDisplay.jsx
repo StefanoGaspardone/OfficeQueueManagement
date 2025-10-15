@@ -82,7 +82,11 @@ export default function InfoDisplay({ ticketId }) {
       console.log("ticketIdRef.current = " + ticketIdRef.current);
       console.log("counterCalledBy = " + JSON.stringify(counterCalledByRef));
       setServedTicket(data);
-      if (data.ticketId === ticketIdRef.current && data.ticketId !== null && ticketIdRef.current !== null) {
+      if (
+        data.ticketId === ticketIdRef.current &&
+        data.ticketId !== null &&
+        ticketIdRef.current !== null
+      ) {
         setCalled(true);
         setCounterCalledBy(data.counterId);
       } else {
@@ -95,8 +99,11 @@ export default function InfoDisplay({ ticketId }) {
             }
           })
         );
-        if(counterCalledByRef.current === data.counterId && data.counterId !== null ){
-            setCalled(false);
+        if (
+          counterCalledByRef.current === data.counterId &&
+          data.counterId !== null
+        ) {
+          setCalled(false);
         }
       }
     });
