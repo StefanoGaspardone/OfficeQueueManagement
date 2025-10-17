@@ -1,4 +1,4 @@
-TEMPLATE FOR RETROSPECTIVE (Team ##)
+TEMPLATE FOR RETROSPECTIVE (Team 05)
 =====================================
 
 The retrospective should include _at least_ the following
@@ -27,10 +27,12 @@ sections:
 
 ### Detailed statistics
 
-| Story  | # Tasks | Points | Hours est. | Hours actual |
-|--------|---------|--------|------------|--------------|
-| _Uncategorized_   |         |       |            |              |
-| n      |         |        |            |              |  
+| Story            | # Tasks | Points    | Hours est.   | Hours actual |
+|--------|---------|--------|------------|--------------|--------------|
+| _Uncategorized_  |10      |            |25h 20m       |26h 5m        |
+| Get tickets      |5       |3           |10h 30m       |5h 5m         |  
+| Next customer    |6       |3           |11h           |6h            |
+| Call customer    |5       |3           |10h 30m       |8h 45m        |
 
 > story `Uncategorized` is for technical tasks, leave out story points (not applicable in this case)
 
@@ -43,7 +45,7 @@ sections:
 
 - Total estimation error ratio: sum of total hours spent / sum of total hours effort - 1
 
-    $$\frac{\sum_i spent_{task_i}}{\sum_i estimation_{task_i}} - 1$$
+    $$\frac{\sum_i spent_{task_i}}{\sum_i estimation_{task_i}} - 1$$ = -0.185 
     
 - Absolute relative task estimation error: sum( abs( spent-task-i / estimation-task-i - 1))/n
 
