@@ -6,7 +6,8 @@
 		"start": "node index.js",
 		"dev": "nodemon index.js",
 		"pretest": "node --experimental-vm-modules ./tests/setupTestDB.mjs",
-		"test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand"
+		"test": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand",
+		"test:coverage": "node --experimental-vm-modules ./node_modules/jest/bin/jest.js --runInBand --coverage"
 	},
 	"keywords": [],
 	"author": "",
