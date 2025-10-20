@@ -12,27 +12,27 @@ sections:
 
 ### Macro statistics
 
-- Number of stories committed vs. done 
-- Total points committed vs. done 
-- Nr of hours planned vs. spent (as a team)
+- Number of stories committed vs. done = 3 vs 3 
+- Total points committed vs. done = 9 vs 9
+- Nr of hours planned vs. spent (as a team) = 56h 20m vs 45h 55m
 
 **Remember**a story is done ONLY if it fits the Definition of Done:
  
 - Unit Tests passing
 - Code review completed
 - Code present on VCS
-- End-to-End tests performed
+- End-to-End (and Integration) tests performed
 
 > Please refine your DoD if required (you cannot remove items!) 
 
 ### Detailed statistics
 
 | Story            | # Tasks | Points    | Hours est.   | Hours actual |
-|--------|---------|--------|------------|--------------|--------------|
-| _Uncategorized_  |10      |            |25h 20m       |26h 5m        |
+|--------|--------|------------|--------------|--------------|
+| _Uncategorized_  |10      |      -      |25h 20m       |26h 5m        |
 | Get tickets      |5       |3           |10h 30m       |5h 5m         |  
 | Next customer    |6       |3           |11h           |6h            |
-| Call customer    |5       |3           |10h 30m       |8h 45m        |
+| Call customer    |5       |3           |9h 30m       |8h 45m        |
 
 > story `Uncategorized` is for technical tasks, leave out story points (not applicable in this case)
 
@@ -40,8 +40,8 @@ sections:
 
 |            | Mean | StDev |
 |------------|------|-------|
-| Estimation |      |       | 
-| Actual     |      |       |
+| Estimation |   2h 10m   |   1h 59m    | 
+| Actual     |   1h 56m   |    2h 7m   |
 
 - Total estimation error ratio: sum of total hours spent / sum of total hours effort - 1
 
@@ -49,22 +49,22 @@ sections:
     
 - Absolute relative task estimation error: sum( abs( spent-task-i / estimation-task-i - 1))/n
 
-    $$\frac{1}{n}\sum_i^n \left| \frac{spent_{task_i}}{estimation_task_i}-1 \right| $$
+    $$\frac{1}{n}\sum_i^n \left| \frac{spent_{task_i}}{estimation_task_i}-1 \right| $$ = 0.372
   
 ## QUALITY MEASURES 
 
 - Unit Testing:
-  - Total hours estimated
-  - Total hours spent
-  - Nr of automated unit test cases 
-  - Coverage
+  - Total hours estimated = 6h
+  - Total hours spent = 3h 20m
+  - Nr of automated unit test cases = 3
+  - Coverage = 60%
 - E2E testing:
-  - Total hours estimated
-  - Total hours spent
-  - Nr of test cases
+  - Total hours estimated = 6h
+  - Total hours spent = 2h 30m
+  - Nr of test cases = 2
 - Code review 
-  - Total hours estimated 
-  - Total hours spent
+  - Total hours estimated =  7h 30m
+  - Total hours spent = 4h
   
 
 
