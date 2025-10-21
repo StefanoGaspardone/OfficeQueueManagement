@@ -71,17 +71,29 @@ sections:
 ## ASSESSMENT
 
 - What did go wrong in the sprint?
+  > We did not assign all the tasks immediately (as we should have done) and it impacted on our work, other than that we didn't consider the "Demo preparation" in the task estimation. We should have made the tasks smaller and more precise/descriptive.
 
 - What caused your errors in estimation (if any)?
+  > Lack of experience on the task estimation procedure and also on the technology to use for some of the tasks. 
 
 - What lessons did you learn (both positive and negative) in this sprint?
+  > - We have to split tasks in a better way (smaller chunks) and we should discuss more on decisions regarding the general aspects of the project.
+  > - We majorly had good communication in the team
+
 
 - Which improvement goals set in the previous retrospective were you able to achieve? 
+  > XXX
   
 - Which ones you were not able to achieve? Why?
+  > XXX
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
 
-  > Propose one or two
+  > - We need to work better during the sprint planning (especially for the task definition, estimation and assignment)
+  >  - We need to focus better on team-work instead than just splitting the work among the group members
 
-- One thing you are proud of as a Team!!
+
+- One thing you are proud of as a Team !!
+  > We are Powerpuff Girls, we overcame all problems that arose without blaming someone and helped each other
+  
+  ![Alt text](./ppg.jpeg)
