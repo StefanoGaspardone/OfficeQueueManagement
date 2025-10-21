@@ -96,4 +96,4 @@ sections:
 - One thing you are proud of as a Team !!
   > We are Powerpuff Girls, we overcame all problems that arose without blaming someone and helped each other
   
-  <img src="./ppg.png" alt="Powerpuff Girls" style="max-width:80%; height:auto;" />
+  <img src="./ppg.png" alt="Powerpuff Girls" title="Powerpuff Girls — sugar, spice and everything nice!" style="max-width:80%; height:auto;" />
